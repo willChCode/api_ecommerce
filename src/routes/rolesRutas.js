@@ -2,9 +2,10 @@ const rolesR = require("express").Router();
 const { Rol } = require("../models/rolesModel");
 
 rolesR.get("/", async (req, res) => {
-  const buscar = await Rol.find({});
+  const buscar = await Rol.find({}).populate("user", { name: 1, email: 1 });
   res.status(200).json(buscar);
 });
+
 rolesR.post("/", async (req, res) => {
   const { cargo } = req.body; //body
 
@@ -14,9 +15,7 @@ rolesR.post("/", async (req, res) => {
   const agregar = await newRol.save();
   res.status(201).json(agregar);
 });
-// rolesR.put("/:id", (req, res) => {
-//   res.send("put");
-// });
+
 rolesR.delete("/:id", async (req, res) => {
   const id = req.params.id;
   try {
