@@ -1,30 +1,11 @@
 const rolesR = require("express").Router();
 const { Rol } = require("../models/rolesModel");
+const rolC = require("../controllers/rolesControllers"); //refactorizamos con nombre de objeto
 
-rolesR.get("/", async (req, res) => {
-  const buscar = await Rol.find({}).populate("user", { name: 1, email: 1 });
-  res.status(200).json(buscar);
-});
+rolesR.get("/", rolC.rolGet);
 
-rolesR.post("/", async (req, res) => {
-  const { cargo } = req.body; //body
+rolesR.post("/", rolC.rolPost);
 
-  const newRol = new Rol({
-    cargo: cargo,
-  });
-  const agregar = await newRol.save();
-  res.status(201).json(agregar);
-});
-
-rolesR.delete("/:id", async (req, res) => {
-  const id = req.params.id;
-  try {
-    const eliminar = await Rol.deleteOne({ _id: id });
-    res.status(200).json(eliminar);
-  } catch (err) {
-    console.log(err);
-    res.status(401).send({ error: "id usuario no encontrado" });
-  }
-});
+rolesR.delete("/:id", rolC.rolDelete);
 
 module.exports = rolesR;
