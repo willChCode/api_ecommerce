@@ -1,6 +1,7 @@
 const userR = require("express").Router();
 const { User } = require("../models/usersModel");
 const { Rol } = require("../models/rolesModel");
+const bcrypt = require("bcrypt");
 
 userR.get("/", async (req, res) => {
   const buscar = await User.find({}).populate("rol", { cargo: 1 });
@@ -18,6 +19,8 @@ userR.post("/", async (req, res) => {
     rolId = "636c147d7f1c733c080210d0", //siempre va ser cliente
   } = req.body;
 
+  const passwordHash = await bcrypt.hash(password, 10); //encriptando la contra
+
   const rol = await Rol.findById(rolId); //buscamos el id del rol
 
   const newUser = new User({
@@ -26,7 +29,7 @@ userR.post("/", async (req, res) => {
     lastName,
     age,
     email,
-    password,
+    password: passwordHash,
     date: new Date(),
     rol,
   });
