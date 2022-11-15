@@ -16,21 +16,16 @@ const userPost = async (req, res) => {
     password
   } = req.body
 
-  const passwordHash = await bcrypt.hash(password, 10) //encriptando la contra
-
-  const rol = await Rol.findById(rolId) //buscamos el id del rol
-
   const newUser = new User({
     //nuevo usuario con schema
     name,
     age,
     email,
-    password: passwordHash,
-    date: new Date(),
-    rol
+    password: bcrypt.hashSync(password, 10),
+    date: new Date()
   })
 
-  const nuevoUsuario = await newUser.save()
+  const nuevoUsuario = await newUser.save({ validateBeforeSave: true })
   //concatenamos y guardamos el nuevo usuario en el rol
   // rol.user = rol.user.concat(nuevoUsuario._id);
   // await rol.save();
