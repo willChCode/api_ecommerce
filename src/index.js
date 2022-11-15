@@ -4,12 +4,14 @@ const morgan = require('morgan')
 const { conexionDB } = require('./mongo')
 const notFound = require('./middleware/notFound')
 const userR = require('./routes/usersRutas')
-const loginR = require('./routes/loginRutas')
+// const adminR = require('./routes/adminRutas')
+// const loginR = require('./routes/loginRutas')
 const app = express()
 
 //config
 app.set('nameServer', 'SERVER WILL')
 app.use(express.json())
+app.use(cookieParser());
 
 //conexion
 conexionDB()
