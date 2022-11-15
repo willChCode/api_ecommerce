@@ -1,19 +1,25 @@
+
 const { User } = require("../models/usersModel");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken')
 const cookie = require('cookie');
+const { User } = require('../models/usersModel')
+const bcrypt = require('bcrypt')
+
 
 const loginPost = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body
 
-  const datos = await User.findOne({ email });
+  const datos = await User.findOne({ email })
+  console.log(datos)
 
   const userValidate =
-    datos === null ? false : await bcrypt.compare(password, datos.password);
+    datos === null ? false : await bcrypt.compare(password, datos.password)
 
   if (userValidate === false) {
-    return res.status(401).json({ error: "usuario y password no encontrados" });
+    return res.status(401).json({ error: 'usuario y password no encontrados' })
   }
+
 
   const token = jwt.sign({ email,  password, expiresIn: 60 * 60 * 24 * 7 }, `${process.env.SECRET}`)
 
@@ -24,7 +30,9 @@ const loginPost = async (req, res) => {
   res.setHeaders('Set-Cookie', serialized);
   res.status(200).json({ message: `bienvenido ${datos.name}` });
 };
+  res.status(200).json({ message: `bienvenido ${datos.name}` })
+}
 
 module.exports = {
-  loginPost,
-};
+  loginPost
+}

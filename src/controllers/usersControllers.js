@@ -26,10 +26,6 @@ const userPost = async (req, res) => {
   })
 
   const nuevoUsuario = await newUser.save({ validateBeforeSave: true })
-  //concatenamos y guardamos el nuevo usuario en el rol
-  // rol.user = rol.user.concat(nuevoUsuario._id);
-  // await rol.save();
-
   res.status(201).json(nuevoUsuario)
 }
 
