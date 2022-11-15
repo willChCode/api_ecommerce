@@ -1,6 +1,6 @@
-const adminR = require('express').Router()
-const { adminPost } = require('../controllers/adminControllers')
+// const adminR = require('express').Router()
+// const { adminPost } = require('../controllers/adminControllers')
 
-adminR.post('/', adminPost)
+// adminR.post('/', adminPost)
 
-module.exports = adminR
+// module.exports = adminR
