@@ -1,7 +1,7 @@
 const { User } = require("../models/usersModel");
 const bcrypt = require("bcrypt");
-import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
+const jwt = require('jsonwebtoken')
+const cookie = require('cookie');
 
 const loginPost = async (req, res) => {
   const { email, password } = req.body;
