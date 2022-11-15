@@ -1,9 +1,9 @@
-import mongoose, { Schema, model, Model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 const orderSchema = new Schema({
-
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    orderItems: [{
+    cart: [
+      {
         _id     : { type: Schema.Types.ObjectId, ref: 'Product', required: true },
         title   : { type: String, required: true },
         size    : { type: String, required: true },
@@ -11,7 +11,8 @@ const orderSchema = new Schema({
         slug    : { type: String, required: true },
         image   : { type: String, required: true },
         price   : { type: Number, required: true },
-    }],
+    }
+  ],
     shippingAddress: {
         firstName : { type: String, required: true },
         lastName  : { type: String, required: true },
@@ -24,13 +25,13 @@ const orderSchema = new Schema({
     },
     numberOfItems: { type: Number, required: true },
     subTotal     : { type: Number, required: true },
-    tax          : { type: Number, required: true },
+    taxes          : { type: Number, required: true },
     total        : { type: Number, required: true },
 
     isPaid : { type: Boolean, required: true, default: false },
     paidAt : { type: String },
 
-    transactionId: { type: String },
+    // transactionId: { type: String },
     
 }, {
     timestamps: true,
