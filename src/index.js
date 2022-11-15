@@ -5,6 +5,7 @@ const { conexionDB } = require('./mongo')
 const notFound = require('./middleware/notFound')
 // const rolesR = require('./routes/rolesRutas')
 const userR = require('./routes/usersRutas')
+const cookieParser = require('cookie-parser');
 // const adminR = require('./routes/adminRutas')
 // const loginR = require('./routes/loginRutas')
 const app = express()
@@ -12,6 +13,7 @@ const app = express()
 //config
 app.set('nameServer', 'SERVER WILL')
 app.use(express.json())
+app.use(cookieParser());
 
 //conexion
 conexionDB()

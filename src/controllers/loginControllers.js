@@ -1,7 +1,7 @@
 const { User } = require("../models/usersModel");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken')
-const cookie = require('cookie');
+// const cookie = require('cookie-parser');
 
 const loginPost = async (req, res) => {
   const { email, password } = req.body;
@@ -17,11 +17,13 @@ const loginPost = async (req, res) => {
 
   const token = jwt.sign({ email,  password, expiresIn: 60 * 60 * 24 * 7 }, `${process.env.SECRET}`)
 
-  const serialized = cookie.serialize('auth', token, {
-    httpOnly: true, maxAge: 60 * 60 * 24 * 7, secure: 'strict'
-  })
+  res.cookie('auth', `${token}`);
 
-  res.setHeaders('Set-Cookie', serialized);
+  // const serialized = cookie.serialize('auth', token, {
+  //   httpOnly: true, maxAge: 60 * 60 * 24 * 7, secure: 'strict'
+  // })
+  // res.setHeaders('Set-Cookie', serialized);
+  
   res.status(200).json({ message: `bienvenido ${datos.name}` });
 };
 
