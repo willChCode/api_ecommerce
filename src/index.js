@@ -4,14 +4,14 @@ const morgan = require('morgan')
 const { conexionDB } = require('./mongo')
 const notFound = require('./middleware/notFound')
 const userR = require('./routes/usersRutas')
-// const adminR = require('./routes/adminRutas')
-// const loginR = require('./routes/loginRutas')
+const loginR = require('./routes/loginRutas')
 const app = express()
+const cookieParser = require('cookie-parser')
 
 //config
 app.set('nameServer', 'SERVER WILL')
 app.use(express.json())
-app.use(cookieParser());
+app.use(cookieParser())
 
 //conexion
 conexionDB()
@@ -21,6 +21,7 @@ app.use(morgan('dev'))
 
 //rutas
 app.get('/', (req, res) => {
+  res.cookie('hola', 'sdasa')
   res.send('holas')
 })
 app.use('/api/users', userR)
