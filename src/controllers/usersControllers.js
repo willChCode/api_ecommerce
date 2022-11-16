@@ -1,5 +1,4 @@
 const { User } = require('../models/usersModel')
-// const { Rol } = require('../models/rolesModel')
 const bcrypt = require('bcrypt')
 
 const userGet = async (req, res) => {
@@ -8,13 +7,7 @@ const userGet = async (req, res) => {
 }
 
 const userPost = async (req, res) => {
-  const {
-    // request body
-    name,
-    age,
-    email,
-    password
-  } = req.body
+  const { name, age, email, password } = req.body
 
   const newUser = new User({
     //nuevo usuario con schema

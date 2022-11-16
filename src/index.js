@@ -7,22 +7,11 @@ const notFound = require('./middleware/notFound')
 const userR = require('./routes/usersRutas')
 const loginR = require('./routes/loginRutas')
 const app = express()
-const cookieParser = require('cookie-parser')
 
 //config
 app.use(cors())
 app.set('nameServer', 'SERVER WILL')
 app.use(express.json())
-app.use(cookieParser())
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin)
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  )
-  next()
-})
 
 //conexion
 conexionDB()
