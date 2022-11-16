@@ -12,11 +12,9 @@ loginR.get('/', (req, res) => {
   res.send('login')
 })
 loginR.post('/', async (req, res) => {
-  res.cookie('cookieeeee', 'asdsladkjfalsdkfj')
   const { email, password } = req.body
 
   const datos = await User.findOne({ email })
-  console.log(datos)
 
   const userValidate =
     datos === null ? false : await bcrypt.compare(password, datos.password)
@@ -34,14 +32,17 @@ loginR.post('/', async (req, res) => {
   )
   console.log(token)
 
-  res.cookie('auth', 'token')
+  res.cookie('token', token, {
+    httpOnly: true
+  })
 
   // const serialized = cookie.serialize('auth', token, {
   //   httpOnly: true, maxAge: 60 * 60 * 24 * 7, secure: 'strict'
   // })
   // res.setHeaders('Set-Cookie', serialized);
 
-  res.status(200).json({ message: `bienvenido ${datos.name}` })
+  return res.send('bienvenido')
+  // res.status(200).json({ message: `bienvenido ${datos.name}` })
 })
 
 module.exports = loginR
