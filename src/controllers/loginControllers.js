@@ -21,10 +21,11 @@ const loginPost = async (req, res) => {
     },
     `${process.env.SECRET}`
   )
-  res.cookie('tokens', token);
-
   // res.setHeader('set-cookie', ['prueba'])
-  res.status(200).json({ message: `bienvenido ${datos.name}`, token })
+  res
+    .status(200)
+    .cookie('token', token)
+    .json({ message: `bienvenido ${datos.name}`, token })
 }
 
 module.exports = {
