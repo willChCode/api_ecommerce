@@ -1,0 +1,15 @@
+//__________________POST-PRODUCT
+{
+  "name":"pants cortos",
+  "price":75,
+  "description":"pants cortos de verano",
+  "stock":100,
+  "image":"urls",
+  "options":{
+    "sizes":"L",
+    "type":"pants",
+    "gender":"men",
+    "tags":["#pants","#blackfriday","#jeans"]
+  },
+  "slug":"pants-cortoss"
+}
