@@ -45,3 +45,7 @@ const port = process.env.PORT || 3001
 app.listen(port, () => {
   console.log(`${app.get('nameServer')} on port ${port}`)
 })
+
+module.exports = {
+  corsOptions
+}

@@ -1,10 +1,9 @@
 const loginR = require('express').Router()
 // const { loginPost } = require('../controllers/loginControllers')
-const cookieParser = require('cookie-parser')
+const cors = require('cors');
 const { loginPost } = require('../controllers/loginControllers')
+const corsOptions = require('../index');
 
-loginR.use(cookieParser())
-
-loginR.post('/', loginPost)
+loginR.post('/', cors(corsOptions), loginPost)
 
 module.exports = loginR
