@@ -1,9 +1,6 @@
 const loginR = require('express').Router()
-// const { loginPost } = require('../controllers/loginControllers')
-const cors = require('cors');
 const { loginPost } = require('../controllers/loginControllers')
-const corsOptions = require('../index');
 
-loginR.post('/', cors(corsOptions), loginPost)
+loginR.post('/', loginPost)
 
 module.exports = loginR

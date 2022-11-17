@@ -1,33 +1,32 @@
 require('dotenv').config()
-const cors = require('cors')
 const express = require('express')
 const morgan = require('morgan')
 const { conexionDB } = require('./mongo')
 const notFound = require('./middleware/notFound')
+const cors = require('cors')
 const userR = require('./routes/usersRutas')
 const loginR = require('./routes/loginRutas')
 const ProductR = require('./routes/productsRutas')
 const app = express()
-const cookieParser = require('cookie-parser');
-//config
-// app.use(cors()) // solo usar cuando el origin es '*', o sea cuando cualquiera puede tener acceso
+const cookieParser = require('cookie-parser')
 
+const corsOption = {
+  origin: 'http://localhost:5173',
+  credentials: true,
+  optionsSuccessStatus: 200
+}
+
+//config
 app.set('nameServer', 'SERVER WILL')
 app.use(express.json())
-app.use(cookieParser());
+app.use(cookieParser())
+app.use(cors(corsOption))
 
 //conexion
 conexionDB()
 
 //middleware
 app.use(morgan('dev'))
-
-// CORS - Options
-var corsOptions = {
-  origin: 'http://localhost:3000', // dandole acceso al front end
-  credentials: true, // estableciendo credentials en true para el header de Access-Control-Allow-Credentials CORS header
-  optionsSuccessStatus: 200
-}
 
 //rutas
 app.get('/', (req, res) => {
@@ -45,7 +44,3 @@ const port = process.env.PORT || 3001
 app.listen(port, () => {
   console.log(`${app.get('nameServer')} on port ${port}`)
 })
-
-module.exports = {
-  corsOptions
-}
