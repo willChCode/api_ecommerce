@@ -1,6 +1,8 @@
 const loginR = require('express').Router()
 const { loginPost } = require('../controllers/loginControllers')
-// CORS - Options
+const cookieParser = require('cookie-parser')
+
+loginR.use(cookieParser())
 
 loginR.post('/', loginPost)
 
