@@ -18,35 +18,29 @@ const productSchema = new Schema(
       required: true,
       default: 0
     },
-    sizes: {
-      type: String,
-      enum: {
-        values: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-        message: '{VALUE} no es un tamaño valido'
-      }
+    image: {
+      type: String
     },
-    type: {
-      type: String,
-      enum: {
-        values: ['shirts', 'pants', 'hoodies', 'hats'],
-        message: '{VALUE} no es un tipo valido'
-      }
-    },
-    gender: {
-      type: String,
-      enum: {
-        values: ['men', 'women', 'kid', 'unisex'],
-        message: '{VALUE} no es un genero válido'
-      }
+    options: {
+      sizes: {
+        type: String,
+        enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+        default: 'L'
+      },
+      types: {
+        type: String,
+        enum: ['shirts', 'pants', 'hoodies', 'hats']
+      },
+      genders: {
+        type: String,
+        enum: ['men', 'women', 'kid', 'unisex']
+      },
+      tags: [{ type: String }]
     },
     slug: {
       type: String,
       required: true,
       unique: true
-    },
-    tags: [{ type: String }],
-    image: {
-      type: String
     }
   },
   {
@@ -57,6 +51,6 @@ const productSchema = new Schema(
 //model
 const Product = models.Product || new model('Product', productSchema)
 
-module.export = {
+module.exports = {
   Product
 }

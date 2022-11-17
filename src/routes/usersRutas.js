@@ -1,12 +1,12 @@
-const userR = require("express").Router();
-const userC = require("../controllers/usersControllers");
+const userR = require('express').Router()
+const controller = require('../controllers/usersControllers')
 
-userR.get("/", userC.userGet);
+userR.get('/', controller.userGet)
 
-userR.post("/", userC.userPost);
+userR.post('/', controller.userPost)
 
-userR.put("/:id", userC.userPut);
+userR.put('/:id', controller.userPut)
 
-userR.delete("/:id", userC.userDelete);
+userR.delete('/:id', controller.userDelete)
 
-module.exports = userR;
+module.exports = userR

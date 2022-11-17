@@ -21,14 +21,13 @@ const loginPost = async (req, res) => {
     },
     `${process.env.SECRET}`
   )
+  // res.cookie('tokens', token, {
+  //   secure: true,
+  //   maxAge: 60 * 60 * 24 * 7
+  // })
 
-  res.cookie('token', token, {
-    httpOnly: true,
-    secure: true,
-    maxAge: 60 * 60 * 24 * 7
-  })
-
-  res.status(200).json({ message: `bienvenido ${datos.name}` })
+  // res.setHeader('set-cookie', ['prueba'])
+  res.status(200).json({ message: `bienvenido ${datos.name}`, token })
 }
 
 module.exports = {

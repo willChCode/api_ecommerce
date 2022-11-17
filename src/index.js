@@ -6,6 +6,7 @@ const { conexionDB } = require('./mongo')
 const notFound = require('./middleware/notFound')
 const userR = require('./routes/usersRutas')
 const loginR = require('./routes/loginRutas')
+const ProductR = require('./routes/productsRutas')
 const app = express()
 
 //config
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 })
 app.use('/api/users', userR)
 app.use('/api/login', loginR)
+app.use('/api/products', ProductR)
 
 //middlewares
 app.use(notFound)
