@@ -23,7 +23,13 @@ const userSchema = new Schema({
     enum: ['admin', 'client', 'SEO'],
     message: `no es un rol valido`,
     default: 'client'
-  }
+  },
+  order: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Order'
+    }
+  ]
 })
 
 //configuracion de respuesta
