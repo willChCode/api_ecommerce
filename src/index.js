@@ -8,6 +8,7 @@ const cors = require('cors')
 const userR = require('./routes/usersRutas')
 const loginR = require('./routes/loginRutas')
 const ProductR = require('./routes/productsRutas')
+const OrderR = require('./routes/ordersRutas')
 
 const corsOption = {
   origin: 'http://localhost:5173',
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
 app.use('/api/users', userR)
 app.use('/api/login', loginR)
 app.use('/api/products', ProductR)
+app.use('/api/orders', OrderR)
 
 //middlewares
 app.use(notFound)
