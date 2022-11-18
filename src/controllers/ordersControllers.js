@@ -2,15 +2,15 @@ const { Order } = require('../models/orderModel')
 
 // Hacer un middleware para todas las rutas para verificar q el usuario esté autenticado
 
-const orderGet = async (req, res) => {
+const ordersGet = async (req, res) => {
 
   // 1- Verificar q el usuario esté autenticado
   // const token = req.cookies('nombre-de-la-cookie');
   // console.log(token)
 
-  const orders = await Order.find({}) 
-  
-  // verificar q la order exista
+  const orders = await Order.find({});
+
+  if(!orders) return res.status(404).json({ message: 'Ninguna orden creada' });  
   // verificar q la order pertenezca al usuario
 
   res.status(200).json(orders)
@@ -50,16 +50,16 @@ const orderPost = async (req, res) => {
   res.status(201).json(data)
 }
 
-const orderDelete = (req, res) => {
+const orderDelete = async (req, res) => {
   const { id } = req.params
 
-  Order.findByIdAndDelete({ _id: id }).then(data =>
-    res.status(200).json(data)
-  )
+  const order = await Order.findByIdAndDelete({ _id: id })
+
+  res.status(200).json(order);
 }
 
 module.exports = {
-  orderGet,
+  ordersGet,
   orderGetById,
   orderPost,
   orderDelete,
