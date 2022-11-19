@@ -1,18 +1,18 @@
 const { User } = require('../models/usersModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { loginSchema } = require('../common/users/user_schema');
 
 const loginPost = async (req, res) => {
-  const { email, password } = req.body
+  const { email, password } = req.body;
+
+  const check = loginSchema.safeParse({ email, password });
+
+  if(!check.success) return res.status(401).json({ message: check.error.message })
 
   const datos = await User.findOne({ email })
 
-  const userValidate =
-    datos === null ? false : await bcrypt.compare(password, datos.password)
-
-  if (userValidate === false) {
-    return res.status(401).json({ error: 'usuario y password no encontrados' })
-  }
+  if(!datos || bcrypt.compareSync(password, datos.password)) return res.status(401).json({ error: 'usuario y password no encontrados' });
 
   const token = jwt.sign(
     {
@@ -23,7 +23,7 @@ const loginPost = async (req, res) => {
   )
   // res.setHeader('set-cookie', ['prueba'])
   res
-    .status(200)
+    .status(201)
     .cookie('token', token)
     .json({ message: `bienvenido ${datos.name}`, token })
 }
