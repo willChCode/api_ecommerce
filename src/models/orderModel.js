@@ -20,7 +20,7 @@ const orderSchema = new Schema(
       lastName: { type: String, required: true },
       address: { type: String, required: true },
       address2: { type: String },
-      zip: { type: String, required: true },
+      zip: { type: Number, required: true },
       city: { type: String, required: true },
       country: { type: String, required: true },
       phone: { type: String, required: true }
