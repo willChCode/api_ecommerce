@@ -1,74 +1,86 @@
 const { User } = require('../models/usersModel')
 const bcrypt = require('bcrypt')
-const { registerSchema } = require('../common/users/user_schema');
+const { registerSchema } = require('../common/users/user_schema')
 
+const usersGet = async (req, res, next) => {
+  try {
+    const user = await User.find({}).populate('order', { orderItems: 1 })
 
-const userGet = async (req, res) => {
-
-  const id = req.params.id;
-
-  if(!id) return res.status(400).json({ message: 'ID requerido' })
-
-  const user = await User.find(id);
-
-  if(!user) return res.status(404).json({ message: 'Usuario no encontrado' });
-  res.status(200).json(user);
-}
-
-const userPost = async (req, res, next) => {
-  const { name, age, email, password } = req.body;
-
-  const check = registerSchema.safeParse({ name, age, email, password });
-  if(!check.success) return res.status(400).json({ message: check.error.issues[0].message })
-
-  const user = await User.findOne({ email });
-  if(user) return res.status(409).json({ message: 'Correo ya en uso' })
-
-
-  const newUser = new User({
-    // nuevo usuario con schema
-    name,
-    age,
-    email,
-    password: bcrypt.hashSync(password, 10),
-    date: new Date()
-  })
-
-  const nuevoUsuario = await newUser.save({ validateBeforeSave: true })
-  res.status(201).json(nuevoUsuario)
-}
-
-const userPut = async (req, res) => {
-  const id = req.params.id
-  const { name, email, password } = req.body
-
-  const check = registerSchema.safeParse({ name, email, password });
-  if(!check.success) return res.status(400).json({ message: check.error.issues[0].message })
-
-  const user = await User.findById(id);
-  if(!user) return res.status(404).json({ message: 'Usuario no encontrado' })
-
-  const userPut = {
-    name,
-    email,
-    password
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' })
+    res.status(200).json(user)
+  } catch (err) {
+    next(err)
   }
-  const update = await User.updateOne({ _id: id }, userPut)
-  res.status(200).json(update)
+}
+//arreglado, esta en un get y buscaba el id
+const userGetById = async (req, res, next) => {
+  try {
+    const id = req.params.id
+
+    const user = await User.findById(id)
+    res.status(200).json(user)
+  } catch (err) {
+    next(err)
+  }
+}
+//arregladpo Password2
+const userPost = async (req, res, next) => {
+  try {
+    const datosUser = req.body
+
+    const check = registerSchema.safeParse(datosUser)
+
+    if (!check.success)
+      return res.status(400).json({ message: check.error.issues[0].message })
+
+    const newUser = new User({
+      // nuevo usuario con schema
+      ...datosUser,
+      password: bcrypt.hashSync(datosUser.password, 10),
+      date: new Date()
+    })
+    const nuevoUsuario = await newUser.save()
+
+    res.status(201).json({
+      message: 'usuario creado',
+      nuevoUsuario
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+//arreglado campos desde el req incompletos y desde el check
+const userPut = async (req, res, next) => {
+  try {
+    const id = req.params.id
+    const updateUser = req.body
+
+    const check = registerSchema.safeParse(updateUser)
+
+    if (!check.success)
+      return res.status(400).json({ message: check.error.issues[0].message })
+
+    const update = await User.updateOne({ _id: id }, updateUser)
+    res.status(200).json(update)
+  } catch (err) {
+    next(err)
+  }
 }
 
-const userDelete = async (req, res) => {
-  const { id } = req.params
+const userDelete = async (req, res, next) => {
+  try {
+    const { id } = req.params
 
-  const user = await User.findById(id);
-  if(!user) return res.status(404).json({ message: 'Usuario no encontrado' })
-
-  const eliminar = await User.deleteOne({ _id: id })
-  res.status(200).json(eliminar)
+    const eliminar = await User.deleteOne({ _id: id })
+    res.status(200).json(eliminar)
+  } catch (err) {
+    next(err)
+  }
 }
 
 module.exports = {
-  userGet,
+  usersGet,
+  userGetById,
   userPost,
   userPut,
   userDelete

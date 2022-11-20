@@ -13,3 +13,35 @@
   },
   "slug":"pants-cortoss"
 }
+
+//__________________POST-ORDERS
+{
+  "user":"637418e7f6b373d6f7a4f286",
+  "orderItems":[
+    {
+      "_id":"63757f1022af53dadfa35bc3",
+      "title":"ORDEN 1",
+      "size":"L",
+      "quantity":2,
+      "slug":"orden-1",
+      "image":"url",
+      "price":100
+    }],
+    "shippingAddress": {
+      "firstName":"jose",
+      "lastName":"maria",
+      "address":"av. americas",
+      "address2":"av. siempre viva",
+      "zip":"prueba ZIP",
+      "city":"Santa Cruz",
+      "country":"Bolivia",
+      "phone":61504566
+    },
+    "numberOfItems":2,
+    "subTotal":180,
+    "tax":20,
+    "total":200,
+    "isPaid":false,
+    "paidAt":"fecha...",
+    "transactionId":"transacion en proceso"
+}
